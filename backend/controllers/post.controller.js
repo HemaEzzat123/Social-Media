@@ -55,9 +55,9 @@ const getAllPosts = async (req, res) => {
       $or: [
         { privacy: "public" },
         { privacy: "friends", user: { $in: userFriends } },
-        { user: loggedInUser },
+        { privacy: "private", user: loggedInUser },
+        { user: loggedInUser }, // in case of user's own posts with any privacy
       ],
-      privacy: { $ne: "private" },
     })
       .populate("user", "name profilePic")
       .populate("likes", "name")
