@@ -87,7 +87,7 @@ export default function PostCard({ post }) {
               <h4 className="font-bold hover:underline">{post?.user?.name}</h4>
             </Link>
             <Link to={`/profile/${post?.reportedBy?._id}`}>
-              {post?.reportedBy._id ? (
+              {post?.reportedBy?._id ? (
                 <p className="text-gray-500 text-sm hover:underline">
                   reported by {post?.reportedBy?.name}
                 </p>
