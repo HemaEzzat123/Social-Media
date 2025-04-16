@@ -86,10 +86,14 @@ export default function PostCard({ post }) {
             <Link to={`/profile/${post?.user?._id}`}>
               <h4 className="font-bold hover:underline">{post?.user?.name}</h4>
             </Link>
-            <Link to={`/posts/${post?.reportedBy?._id}`}>
-              <p className="text-gray-500 text-sm hover:underline">
-                reported by {post?.reportedBy?.name}
-              </p>
+            <Link to={`/profile/${post?.reportedBy?._id}`}>
+              {post?.reportedBy._id ? (
+                <p className="text-gray-500 text-sm hover:underline">
+                  reported by {post?.reportedBy?.name}
+                </p>
+              ) : (
+                ""
+              )}
             </Link>
             <p className="text-gray-500 text-sm">
               {relativeTime} • {post?.privacy}
@@ -105,39 +109,40 @@ export default function PostCard({ post }) {
           <FontAwesomeIcon icon={faTrashCan} />
         </button>
       </div>
-
-      <div className="flex justify-center items-center">
-        {" "}
-        {/* Centered content */}
-        {post?.media?.photo && (
-          <img
-            src={`${summaryApi.domain.url}/uploads/${post?.media?.photo}`}
-            alt="post content"
-            className="w-full max-w-[200px] max-h-[150px] object-contain object-center rounded-lg mb-4"
-          />
-        )}
-        {post?.media?.video && (
-          <video
-            controls
-            className="w-full max-w-[200px] max-h-[150px] object-contain object-center rounded-lg mb-4"
-          >
-            <source
-              src={`${summaryApi.domain.url}/uploads/${post?.media?.video}`}
-              type="video/mp4"
+      <Link to={`/posts/${post._id}`} className="w-full">
+        <div className="flex justify-center items-center">
+          {" "}
+          {/* Centered content */}
+          {post?.media?.photo && (
+            <img
+              src={`${summaryApi.domain.url}/uploads/${post?.media?.photo}`}
+              alt="post content"
+              className="w-full max-w-[200px] max-h-[150px] object-contain object-center rounded-lg mb-4"
             />
-            Your browser does not support the video tag.
-          </video>
-        )}
-      </div>
+          )}
+          {post?.media?.video && (
+            <video
+              controls
+              className="w-full max-w-[200px] max-h-[150px] object-contain object-center rounded-lg mb-4"
+            >
+              <source
+                src={`${summaryApi.domain.url}/uploads/${post?.media?.video}`}
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
+          )}
+        </div>
 
-      <p ref={textRef} className="text-gray-500 mt-2 mb-4 line-clamp-2">
-        {post.content}
-      </p>
-      {isClamped && (
-        <p className="text-blue-500 font-semi-bold cursor-pointer">
-          <Link to={`/posts/${post?._id}`}>Read More</Link>
+        <p ref={textRef} className="text-gray-500 mt-2 mb-4 line-clamp-2">
+          {post.content}
         </p>
-      )}
+        {isClamped && (
+          <p className="text-blue-500 font-semi-bold cursor-pointer">
+            <Link to={`/posts/${post?._id}`}>Read More</Link>
+          </p>
+        )}
+      </Link>
 
       <div className="flex justify-between items-center mt-4">
         <div className="flex gap-4 text-gray-500">
